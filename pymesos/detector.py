@@ -1,3 +1,4 @@
+import logging
 try:
     from zookeeper import ZooKeeperException as ZookeeperError
     from zkpython import ZKClient, ChildrenWatch, DataWatch
@@ -12,6 +13,10 @@ except ImportError:
         import kazoo
         kazoo.client.log.setLevel(logging.WARNING)
         kazoo.protocol.connection.log.setLevel(logging.WARNING)
+
+
+logger = logging.getLogger(__name__)
+
 
 class MasterDetector(object):
     def __init__(self, uri, agent):
@@ -32,6 +37,7 @@ class MasterDetector(object):
         return True
 
     def notify(self, master_addr, _):
+        logger.warning("Notify about new master: %s" % master_addr)
         self.agent.onNewMasterDetectedMessage(master_addr)
         return False
 
