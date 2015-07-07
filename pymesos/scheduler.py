@@ -37,6 +37,7 @@ class MesosSchedulerDriver(Process):
 
     @async # called by detector
     def onNewMasterDetectedMessage(self, data):
+        logger.warning("onNewMasterDetectedMsg %s" % data)
         try:
             info = MasterInfo()
             info.ParseFromString(data)
@@ -44,6 +45,7 @@ class MesosSchedulerDriver(Process):
             master = UPID('master@%s:%s' % (ip, info.port))
         except:
             master = UPID(data)
+        logger.warning("Detected master %s" % master)
 
         self.connected = False
         self.register(master)
