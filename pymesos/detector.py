@@ -38,7 +38,8 @@ class MasterDetector(object):
 
     def notify(self, master_addr, _):
         logger.warning("Notify about new master: %s" % master_addr)
-        self.agent.onNewMasterDetectedMessage(master_addr)
+        if master_addr:
+            self.agent.onNewMasterDetectedMessage(master_addr)
         return False
 
     def start(self):
