@@ -26,7 +26,8 @@ class MasterDetector(object):
         self.masterSeq = None
 
     def choose(self, children):
-        if not children:
+        logger.warning("Children set changes: %s" % children)
+        if not children or children == ['log_replicas']:
             self.agent.onNoMasterDetectedMessage()
             return True
         masterSeq = min(children)
@@ -38,8 +39,7 @@ class MasterDetector(object):
 
     def notify(self, master_addr, _):
         logger.warning("Notify about new master: %s" % master_addr)
-        if master_addr:
-            self.agent.onNewMasterDetectedMessage(master_addr)
+        self.agent.onNewMasterDetectedMessage(master_addr)
         return False
 
     def start(self):
