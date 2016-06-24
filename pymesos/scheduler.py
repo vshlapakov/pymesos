@@ -123,6 +123,7 @@ class MesosSchedulerDriver(Process):
 
         assert self.framework_id == update.framework_id
 
+        logger.warning("DEBUG Addr %s Pid %s Uuid %s" % (repr(self.sender.addr), repr(pid), repr(update.uuid)))
         if self.sender.addr and pid:
             update.status.uuid = update.uuid
         else:
