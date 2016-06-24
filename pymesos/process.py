@@ -65,9 +65,9 @@ class Process(UPID):
                 continue
 
             try:
-                #logger.debug("run job %s", func.__name__)
+                logger.debug("run job %s (%s, %s)", func.__name__, repr(args), repr(kw))
                 func(*args, **kw)
-                #logger.debug("run job %s comeplete", func.__name__)
+                logger.debug("run job %s comeplete", func.__name__)
             except Exception, e:
                 logger.exception("error while call %s (tried %d times)", func, tried)
                 if tried < 4:
